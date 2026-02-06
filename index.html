@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Happy Valentine 💖 Mili & Utkarsh</title>
+  <style>
+    /* -------------------- GENERAL -------------------- */
+    body, html {
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', sans-serif;
+      overflow: hidden;
+      background: linear-gradient(to bottom, #ffe6f0, #fff0f5);
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    /* -------------------- BUTTON & INPUT -------------------- */
+    button {
+      padding: 10px 20px;
+      font-size: 1rem;
+      margin-top: 10px;
+      cursor: pointer;
+      border-radius: 8px;
+      border: none;
+      background: #ff66b2;
+      color: white;
+      transition: 0.3s;
+    }
+    button:hover { background: #ff3385; }
+
+    input {
+      padding: 8px;
+      font-size: 1rem;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      margin-top: 5px;
+    }
+
+    /* -------------------- PAGES -------------------- */
+    .question-page, .page-section {
+      display: none;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw;
+      height: 100vh;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: center;
+      text-align: center;
+      padding: 20px;
+      z-index: 10;
+      background: inherit;
+      opacity: 0;
+      transition: opacity 0.8s ease;
+      overflow-y: auto;
+    }
+    .active {
+      display: flex;
+      opacity: 1;
+    }
+
+    /* -------------------- ROMANTIC LINES -------------------- */
+    .romantic-line {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: 1s ease;
+      font-size: 1.2rem;
+      margin: 10px 0;
+    }
+    .romantic-line.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .valentine-text {
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: #ff3385;
+    }
+
+    /* -------------------- HEARTS -------------------- */
+    .heart {
+      position: fixed;
+      font-size: 1.5rem;
+      animation-name: float;
+      animation-timing-function: linear;
+      z-index: 9999; /* Ensure hearts are on top */
+    }
+
+    @keyframes float {
+      0% { transform: translateY(0) scale(1); opacity: 1; }
+      100% { transform: translateY(-100vh) scale(1.3); opacity: 0; }
+    }
+
+    @keyframes heartBurst {
+      0% { transform: scale(1); opacity: 1; }
+      100% { transform: scale(2); opacity: 0; }
+    }
+
+    /* -------------------- WELCOME PAGE -------------------- */
+    #welcomePage {
+      position: fixed;
+      top: 0;
+      left: 0;
+      display: flex;
+      opacity: 1;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      background: radial-gradient(circle, #ffe6f0, #ffb3d9);
+      width: 100%; height: 100%;
+      font-size: 1.5rem;
+      color: #ff3385;
+      cursor: pointer;
+      transition: opacity 0.8s ease;
+      text-shadow: 0 0 5px #ff66b2;
+      animation: pulse 2s infinite alternate;
+      line-height: 1.6;
+      text-align: center;
+      pointer-events: auto;
+    }
+    #welcomePage .highlight {
+      font-size: 2.5rem;
+      font-weight: bold;
+      color: #ff1a75;
+      text-shadow: 0 0 15px #ff66b2;
+      margin-bottom: 20px;
+    }
+    @keyframes pulse { from { transform: scale(1); } to { transform: scale(1.05); } }
+
+    /* -------------------- COUNTDOWN -------------------- */
+    #countdown {
+      margin-top: 20px;
+      font-weight: bold;
+      font-size: 1.2rem;
+      color: #ff66b2;
+    }
+
+    /* -------------------- PHOTOS -------------------- */
+    .photo {
+      max-width: 80%;
+      max-height: 50vh;
+      width: auto;
+      height: auto;
+      border-radius: 20px;
+      opacity: 0;
+      animation: fadeIn 2s forwards;
+      margin: 15px 0;
+    }
+    @keyframes fadeIn { to { opacity: 1; } }
+    .photo-container {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    /* -------------------- PAGE SECTIONS -------------------- */
+    .page-section {
+      padding: 20px;
+      overflow-y: auto;
+    }
+  </style>
+</head>
+<body>
+
+<!-- -------------------- BACKGROUND MUSIC -------------------- -->
+<audio id="bgMusic" src="your-music.mp3" loop></audio>
+
+<!-- -------------------- WELCOME PAGE -------------------- -->
+<div id="welcomePage">
+  <div class="highlight">Hey Milu</div>
+  🌟 Something really exciting is happening…<br>
+  Tap anywhere to see what surprises await 💫
+</div>
+
+<!-- -------------------- QUESTION PAGES -------------------- -->
+<div id="question-container">
+  <!-- Birthday 1 -->
+  <div class="question-page" id="q1">
+    <div class="photo-container">
+      <img src="https://raw.githubusercontent.com/utkarshpatel0710-ship-it/valentine-website/valentine/4.jpeg" alt="Memory 1" class="photo">
+    </div>
+    <p>💖 I love thinking about the day my favorite person in the world was born… Can you tell me the exact date?</p>
+    <input type="date" id="miliBirthday">
+    <button type="button" onclick="checkAnswer(1)">Confirm</button>
+  </div>
+
+  <!-- Birthday 2 -->
+  <div class="question-page" id="q2">
+    <div class="photo-container">
+      <img src="https://raw.githubusercontent.com/utkarshpatel0710-ship-it/valentine-website/valentine/3.jpeg" alt="Memory 2" class="photo">
+    </div>
+    <p>🥰 Now it’s your turn to think about me… Can you tell me my birthday?</p>
+    <input type="date" id="utkarshBirthday">
+    <button type="button" onclick="checkAnswer(2)">Confirm</button>
+  </div>
+
+  <!-- Magical Time -->
+  <div class="question-page" id="q3">
+    <div class="photo-container">
+      <img src="https://raw.githubusercontent.com/utkarshpatel0710-ship-it/valentine-website/valentine/10.jpeg" alt="Magical Memory" class="photo">
+    </div>
+    <p>✨ There’s a magical moment we both love… Can you remind me what time it is?</p>
+    <input type="time" id="magicTime">
+    <button type="button" onclick="checkAnswer(3)">Confirm</button>
+  </div>
+</div>
+
+<!-- -------------------- VALENTINE SECTIONS -------------------- -->
+<div class="page-section" id="section1">
+  <div class="romantic-line">Every moment together feels magical ✨</div>
+  <div class="romantic-line">Even the distance can’t dull our connection 💖</div>
+  <div class="photo-container">
+    <img src="https://raw.githubusercontent.com/utkarshpatel0710-ship-it/valentine-website/valentine/6.jpeg" alt="Memory 4" class="photo">
+    <img src="https://raw.githubusercontent.com/utkarshpatel0710-ship-it/valentine-website/valentine/2.jpeg" alt="Memory 5" class="photo">
+  </div>
+</div>
+
+<div class="page-section" id="section2">
+  <div class="romantic-line">I love the way you make my heart skip a beat 🥰</div>
+  <div class="romantic-line valentine-text">Will you be my Valentine, Milu? 💘</div>
+  <div class="photo-container">
+    <img src="https://raw.githubusercontent.com/utkarshpatel0710-ship-it/valentine-website/valentine/9.jpeg" alt="Memory 6" class="photo">
+    <img src="https://raw.githubusercontent.com/utkarshpatel0710-ship-it/valentine-website/valentine/11.jpeg" alt="Memory 7" class="photo">
+  </div>
+</div>
+
+<div class="page-section" id="section3">
+  <div class="romantic-line">Proud of everything we’ve shared 💕</div>
+  <div class="romantic-line">I want to hold onto these moments forever 🤍</div>
+  <div class="photo-container">
+    <img src="https://raw.githubusercontent.com/utkarshpatel0710-ship-it/valentine-website/valentine/7.jpeg" alt="Memory 8" class="photo">
+    <img src="https://raw.githubusercontent.com/utkarshpatel0710-ship-it/valentine-website/valentine/1.jpeg" alt="Memory 9" class="photo">
+  </div>
+</div>
+
+<div class="page-section" id="section4">
+  <div class="romantic-line">Every day apart is a day closer to us ✨</div>
+  <div class="romantic-line" id="countdown"></div>
+  <div class="photo-container">
+    <img src="https://raw.githubusercontent.com/utkarshpatel0710-ship-it/valentine-website/valentine/5.jpeg" alt="Memory 10" class="photo">
+    <img src="https://raw.githubusercontent.com/utkarshpatel0710-ship-it/valentine-website/valentine/12.jpeg" alt="Memory 11" class="photo">
+  </div>
+</div>
+
+<div class="page-section" id="section5">
+  <div class="romantic-line">See you soon, Milu 💖</div>
+  <div class="romantic-line">Our love is endless and magical ✨</div>
+  <div class="photo-container">
+    <img src="https://raw.githubusercontent.com/utkarshpatel0710-ship-it/valentine-website/valentine/8.jpeg" alt="Memory 12" class="photo">
+    <img src="https://raw.githubusercontent.com/utkarshpatel0710-ship-it/valentine-website/valentine/13.jpeg" alt="Memory 13" class="photo">
+    <img src="https://raw.githubusercontent.com/utkarshpatel0710-ship-it/valentine-website/valentine/14.jpeg" alt="Memory 14" class="photo">
+  </div>
+</div>
+
+<script>
+// -------------------- GLOBAL --------------------
+let currentSection = 0;
+const totalSections = 5;
+let lineIndex = 0;
+
+// -------------------- WELCOME PAGE --------------------
+const welcomePage = document.getElementById("welcomePage");
+function startQuestions(){
+  welcomePage.style.display = "none";  
+  document.getElementById("q1").classList.add("active");
+  const bgMusic = document.getElementById("bgMusic");
+  if(bgMusic) bgMusic.play();
+}
+welcomePage.addEventListener("click", startQuestions);
+welcomePage.addEventListener("touchstart", startQuestions, {passive:true});
+
+// -------------------- PASSWORD CHECK --------------------
+function checkAnswer(num){
+  if(num === 1){
+    const val = document.getElementById("miliBirthday").value;
+    if(val === "2002-10-31") unlockNextQuestion(1);
+    else alert("Oops! Try again 💖");
+  }
+  if(num === 2){
+    const val = document.getElementById("utkarshBirthday").value;
+    if(val === "2000-07-10") unlockNextQuestion(2);
+    else alert("Not quite, try again 🥰");
+  }
+  if(num === 3){
+    const val = document.getElementById("magicTime").value;
+    if(val === "23:11") unlockNextQuestion(3);
+    else alert("Almost… think of the magical moment ✨");
+  }
+}
+
+// -------------------- UNLOCK NEXT QUESTION OR START SECTIONS --------------------
+function unlockNextQuestion(num){
+  document.getElementById("q"+num).classList.remove("active");
+  if(num < 3){
+    document.getElementById("q"+(num+1)).classList.add("active");
+  } else {
+    currentSection = 1;
+    showSection(currentSection);
+    startHearts();
+  }
+}
+
+// -------------------- SHOW SECTION --------------------
+function showSection(num){
+  document.querySelectorAll(".page-section").forEach(s => s.classList.remove("active"));
+  const section = document.getElementById("section"+num);
+  section.classList.add("active");
+  lineIndex = 0;
+  revealLines(section);
+}
+
+// -------------------- REVEAL TEXT LINES --------------------
+function revealLines(section){
+  const lines = section.querySelectorAll(".romantic-line");
+  if(lineIndex < lines.length){
+    lines[lineIndex].classList.add("visible");
+
+    if(lines[lineIndex].classList.contains("valentine-text")){
+      createHeartBurst();
+      lines[lineIndex].style.transform = "scale(1.3)";
+      setTimeout(()=>lines[lineIndex].style.transform = "scale(1)", 800);
+    }
+
+    lineIndex++;
+    setTimeout(()=>revealLines(section), 1500);
+  }
+}
+
+// -------------------- BODY TAP FOR NEXT SECTIONS --------------------
+document.body.addEventListener("click", function(e){
+  if(e.target.tagName === "BUTTON" || e.target.tagName === "INPUT") return;
+  if(document.querySelector(".question-page.active") || welcomePage.style.display !== "none") return;
+
+  if(currentSection < totalSections){
+    currentSection++;
+    showSection(currentSection);
+  }
+});
+
+// -------------------- FLOATING HEARTS --------------------
+function startHearts(){
+  setInterval(()=>{
+    const heart = document.createElement("div");
+    heart.className = "heart";
+    heart.innerText = "💗";
+    heart.style.left = Math.random()*100 + "vw";
+    heart.style.animationDuration = 5 + Math.random()*3 + "s";
+    document.body.appendChild(heart);
+    setTimeout(()=>heart.remove(), 8000);
+  },500);
+}
+
+// -------------------- HEART BURST --------------------
+function createHeartBurst(){
+  for(let i=0; i<10; i++){
+    const heart = document.createElement("div");
+    heart.className = "heart";
+    heart.innerText = "💗";
+    heart.style.left = (Math.random()*100)+"vw";
+    heart.style.top = "50%";
+    heart.style.animationDuration = (1+Math.random()*1.5)+"s";
+    heart.style.animationName = "heartBurst";
+    document.body.appendChild(heart);
+    setTimeout(()=>heart.remove(), 1500);
+  }
+}
+
+// -------------------- COUNTDOWN --------------------
+const meetupDate = new Date("April 28, 2026 00:00:00").getTime();
+function updateCountdown(){
+  const now = new Date().getTime();
+  const days = Math.floor((meetupDate - now)/(1000*60*60*24));
+  const countdownEl = document.getElementById("countdown");
+  if(countdownEl) countdownEl.innerText = `${days} days until we are together 🤍`;
+}
+setInterval(updateCountdown, 1000*60*60);
+updateCountdown();
+</script>
+
+</body>
+</html>
