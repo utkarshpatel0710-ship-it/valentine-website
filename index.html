@@ -114,6 +114,8 @@
       text-align: center;
       pointer-events: auto;
       box-sizing: border-box;
+      overflow: hidden; /* Prevent text from overflowing */
+      max-width: 100%; /* Ensure text stays within the container */
     }
     #welcomePage .highlight {
       font-size: 2.5rem;
@@ -143,6 +145,7 @@
       opacity: 0;
       animation: fadeIn 2s forwards;
       margin: 15px 0;
+      object-fit: contain; /* Ensures images are scaled to fit container */
     }
 
     @keyframes fadeIn { to { opacity: 1; } }
@@ -170,6 +173,12 @@
       /* Make the text a little smaller for mobile */
       #welcomePage {
         font-size: 1.2rem;
+        padding: 10px;
+      }
+
+      .highlight {
+        font-size: 2rem;
+        font-weight: bold;
       }
 
       .romantic-line {
@@ -191,6 +200,18 @@
       .photo {
         max-width: 90%;
         max-height: 40vh;
+      }
+
+      /* Adjust last section images */
+      #section5 .photo-container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+
+      #section5 .photo {
+        max-width: 45%;
+        margin: 10px;
       }
 
       .highlight {
